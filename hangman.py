@@ -7,13 +7,45 @@ import random
 	Hanger: the line drawn hanger
 	Wrong letter board: where the incorrect letters will be shown"""
 
+clock = pygame.time.Clock()
+
 width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
-color = (0, 0, 0)
+colorBackground = (0, 0, 0)
 # Changing surface color
-screen.fill(color)
+screen.fill(colorBackground)
 pygame.display.flip()
+pygame.display.set_caption('The United States of Hangman')
+# Hangman's head
+icon = pygame.image.load('earth.png')
+pygame.display.set_icon(icon)
+headImg = pygame.image.load('earth.png')
+headX = 100
+headY = 100
 
+def head():
+	screen.blit(headImg, (headX, headY))
+
+run = True
+while run:
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			run = False
+    #hang man visual
+	X = 300; Y = 150; width = 5; height = 250
+	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
+	
+	X = 250; Y = 400; width = 100; height = 5
+	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
+
+	X = 300; Y = 150; width = 110; height = 5
+	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
+
+	X = 410; Y = 150; width = 5; height = 20
+	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
+
+	pygame.display.update()
+	clock.tick(30)
    
 pygame.init()
 states = "Alabama Alaska Arizona Arkansas California Colorado Connecticut Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota Mississippi Missouri Montana Nebraska Nevada NewHampshire NewJersey NewMexico NewYork NorthCarolina NorthDakota Ohio Oregon Oklahoma Pennsylvania RhodeIsland SouthCarolina SouthDakota Tennessee Texas Utah Vermont Virginia Washington WestVirginia Wisconsin Wyoming".split()
