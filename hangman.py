@@ -1,3 +1,4 @@
+import pygame
 
 class visual():
     """establishes the core visual elements of the game
@@ -10,10 +11,10 @@ import random
 states = "Alabama Alaska Arizona Arkansas California Colorado Connecticut Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota Mississippi Missouri Montana Nebraska Nevada NewHampshire NewJersey NewMexico NewYork NorthCarolina NorthDakota Ohio Oregon Oklahoma Pennsylvania RhodeIsland SouthCarolina SouthDakota Tennessee Texas Utah Vermont Virginia Washington WestVirginia Wisconsin Wyoming".split()
 
 class StateName():
+    "randomly selects a state name"
     def get_state(wordList):
         state_index = random.randint(0, len(wordList) - 1 )
         return wordList[state_index]
-
 
 class hint(statename):
     "Gives you a hint depending on the state"
@@ -26,10 +27,13 @@ class wrongletter(letter):
     "letters that are incorrect will be shown in the incorrect box"
 
 class stickman(letter):
+		
     """if guess is not a letter in the state name add a part of the stick man
     the stickman has 6 body parts ( 1 head, 2 arms, 2 legs, 1 chest)"""
 
 class endgame():
+	if stickman is drawn:
+		print('Game Over!')
     "when the stick man is fully drawn = when theres 6 incorrect guesses"
 
 
