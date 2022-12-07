@@ -7,4 +7,5 @@ takes the hint, the computer will draw a part of the stick-man.
 
 
 Work cited (this is a list of sources that we use to help us create our code)
-https://www.youtube.com/watch?v=gnlWy-qi6Rs
+- https://www.youtube.com/watch?v=gnlWy-qi6Rs
+- https://pythonprogramming.altervista.org/pygame-4-fonts/
