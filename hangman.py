@@ -1,15 +1,15 @@
 import pygame
 
-class visual():
-	 """establishes the core visual elements of the game
+
+"""establishes the core visual elements of the game
 	Horizontal line: line where the letters are placed
 	Hanger: the line drawn hanger
 	Wrong letter board: where the incorrect letters will be shown"""
-	pygame.init()
-	clock = pygame.time.Clock()
-	width, height = 800, 500
-	screen = pygame.display.set_mode((width, height))
-	pytime.display.set_caption('United States of Hangman')
+pygame.init()
+clock = pygame.time.Clock()
+width, height = 800, 500
+screen = pygame.display.set_mode((width, height))
+pytime.display.set_caption('United States of Hangman')
    
 pygame.init()
 
@@ -46,7 +46,7 @@ class endgame():
 
 
 visual()
-statename()
+StateName()
 letter()
 hint()
 endgame()
