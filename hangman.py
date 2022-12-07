@@ -1,5 +1,5 @@
 import pygame
-import sys
+from pygame.locals import *
 
 class visual():
 	 """establishes the core visual elements of the game
