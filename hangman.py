@@ -1,20 +1,21 @@
 import pygame
-
+from pygame.locals import *
+import random
 
 """establishes the core visual elements of the game
 	Horizontal line: line where the letters are placed
 	Hanger: the line drawn hanger
 	Wrong letter board: where the incorrect letters will be shown"""
-pygame.init()
-clock = pygame.time.Clock()
-width, height = 800, 500
+
+width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
-pytime.display.set_caption('United States of Hangman')
+color = (20, 0, 0)
+# Changing surface color
+screen.fill(color)
+pygame.display.flip()
+
    
 pygame.init()
-
-import random
-
 states = "Alabama Alaska Arizona Arkansas California Colorado Connecticut Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota Mississippi Missouri Montana Nebraska Nevada NewHampshire NewJersey NewMexico NewYork NorthCarolina NorthDakota Ohio Oregon Oklahoma Pennsylvania RhodeIsland SouthCarolina SouthDakota Tennessee Texas Utah Vermont Virginia Washington WestVirginia Wisconsin Wyoming".split()
 
 class StateName():
@@ -23,7 +24,7 @@ class StateName():
         state_index = random.randint(0, len(wordList) - 1 )
         return wordList[state_index]
 
-class hint(statename):
+class hint(StateName):
     "Gives you a hint depending on the state"
 
 class letter():
@@ -38,15 +39,13 @@ class stickman(letter):
     """if guess is not a letter in the state name add a part of the stick man
     the stickman has 6 body parts ( 1 head, 2 arms, 2 legs, 1 chest)"""
 
-class endgame():
-	if stickman is drawn:
-		print('Game Over!')
-    "when the stick man is fully drawn = when theres 6 incorrect guesses"
+
+	
+"when the stick man is fully drawn = when theres 6 incorrect guesses"
 
 
 
-visual()
+
 StateName()
 letter()
 hint()
-endgame()
