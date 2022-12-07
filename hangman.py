@@ -9,7 +9,7 @@ import random
 
 width, height = 1000, 600
 screen = pygame.display.set_mode((width, height))
-color = (20, 0, 0)
+color = (0, 0, 0)
 # Changing surface color
 screen.fill(color)
 pygame.display.flip()
