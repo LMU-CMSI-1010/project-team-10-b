@@ -16,7 +16,7 @@ pygame.display.flip()
 pygame.display.set_caption('The United States of Hangman')
 
 # button variables
-radius = 20
+radius = 25
 gap = 15
 letters = []
 A = 65
@@ -27,8 +27,9 @@ for i in range(26):
 	y = starty + ((i // 13) * (gap + radius * 2))
 	letters.append([x, y, chr(A + i)])
 
+pygame.font.init()
 # font
-LETTER_FONT = pygame.font.SysFont('comicsans', 40)
+LETTER_FONT = pygame.font.SysFont('arial', 30)
 
 states = "Alabama Alaska Arizona Arkansas California Colorado Connecticut Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota Mississippi Missouri Montana Nebraska Nevada NewHampshire NewJersey NewMexico NewYork NorthCarolina NorthDakota Ohio Oregon Oklahoma Pennsylvania RhodeIsland SouthCarolina SouthDakota Tennessee Texas Utah Vermont Virginia Washington WestVirginia Wisconsin Wyoming".split()
 
@@ -76,7 +77,7 @@ def draw():
 		x, y, ltr = letter
 		pygame.draw.circle(screen, (255, 255, 255), (x, y), radius, 3)
 		text = LETTER_FONT.render(ltr, 1, (255, 255, 255))
-		screen.blit(text, (x, y))
+		screen.blit(text, (x - text.get_width() / 2, y - text.get_width() / 2))
 
 	# hang visual
 	X = 300; Y = 150; width = 5; height = 250
@@ -91,7 +92,7 @@ def draw():
 	X = 410; Y = 150; width = 5; height = 20
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 
-pygame.font.init()
+
 while run:
 	clock.tick()
 	draw()
