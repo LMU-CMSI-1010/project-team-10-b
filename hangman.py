@@ -19,7 +19,10 @@ states = "Alabama Alaska Arizona Arkansas California Colorado Connecticut Delawa
 
 class StateName():
     #randomly selects a state name
-    def get_state(wordList):
+    def __init__(self, name):
+	self.name = name
+	
+	def get_state(wordList):
         state_index = random.randint(0, len(wordList) - 1 )
         return wordList[state_index]
 StateName()
