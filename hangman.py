@@ -7,6 +7,15 @@ class visual():
 
 class statename():
     "computer chooses a random state in the state bank"
+import random
+
+states = "Alabama Alaska Arizona Arkansas California Colorado Connecticut Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota Mississippi Missouri Montana Nebraska Nevada NewHampshire NewJersey NewMexico NewYork NorthCarolina NorthDakota Ohio Oregon Oklahoma Pennsylvania RhodeIsland SouthCarolina SouthDakota Tennessee Texas Utah Vermont Virginia Washington WestVirginia Wisconsin Wyoming".split()
+
+class StateName():
+    def get_state(wordList):
+        state_index = random.randint(0, len(wordList) - 1 )
+        return wordList[state_index]
+
 
 class hint(statename):
     "Gives you a hint depending on the state"
