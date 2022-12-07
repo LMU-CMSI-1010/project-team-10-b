@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 
 class visual():
 	 """establishes the core visual elements of the game
@@ -12,6 +11,7 @@ class visual():
 	screen = pygame.display.set_mode((width, height))
 	pytime.display.set_caption('United States of Hangman')
    
+pygame.init()
 
 import random
 
