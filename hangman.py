@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import random
 import os
+import math
 
 # How fast our game loop runs
 clock = pygame.time.Clock()
@@ -25,10 +26,10 @@ starty = 475
 for i in range(26):
 	x = startx + gap * 2 + ((radius * 2 + gap) * (i % 13))
 	y = starty + ((i // 13) * (gap + radius * 2))
-	letters.append([x, y, chr(A + i)])
+	letters.append([x, y, chr(A + i), True])
 
-pygame.font.init()
 # font
+pygame.font.init()
 LETTER_FONT = pygame.font.SysFont('arial', 30)
 
 states = "Alabama Alaska Arizona Arkansas California Colorado Connecticut Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota Mississippi Missouri Montana Nebraska Nevada NewHampshire NewJersey NewMexico NewYork NorthCarolina NorthDakota Ohio Oregon Oklahoma Pennsylvania RhodeIsland SouthCarolina SouthDakota Tennessee Texas Utah Vermont Virginia Washington WestVirginia Wisconsin Wyoming".split()
@@ -72,12 +73,14 @@ hangman_status = 0
 run = True
 
 def draw():
+	screen.fill((0, 0, 0))
 	#letters 
 	for letter in letters:
-		x, y, ltr = letter
-		pygame.draw.circle(screen, (255, 255, 255), (x, y), radius, 3)
-		text = LETTER_FONT.render(ltr, 1, (255, 255, 255))
-		screen.blit(text, (x - text.get_width() / 2, y - text.get_width() / 2))
+		x, y, ltr, visible = letter
+		if visible:
+			pygame.draw.circle(screen, (255, 255, 255), (x, y), radius, 3)
+			text = LETTER_FONT.render(ltr, 1, (255, 255, 255))
+			screen.blit(text, (x - text.get_width() / 2, y - text.get_width() / 2))
 
 	# hang visual
 	X = 300; Y = 150; width = 5; height = 250
@@ -92,7 +95,10 @@ def draw():
 	X = 410; Y = 150; width = 5; height = 20
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 
+	
+	pygame.display.update()
 
+# this code lets us know what coordinate the user has pressed in the game screen
 while run:
 	clock.tick()
 	draw()
@@ -100,14 +106,20 @@ while run:
 		if event.type == pygame.QUIT:
 			run = False
 		if event.type == pygame.MOUSEBUTTONDOWN:
-			pos = pygame.mouse.get_pos()
-			print(pos)
+			pos_x, pos_y = pygame.mouse.get_pos()
+			for letter in letters:
+				x, y, ltr, visible = letter 
+				if visible:
+					distance = math.sqrt((x - pos_x) ** 2 + (y - pos_y) ** 2)
+					if distance < radius:
+						letter[3] = False
+			
    
 
 
 	#screen.blit(body_parts[hangman_status])
 
-	pygame.display.update()
+	
 	clock.tick(30)
 
 
