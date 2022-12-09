@@ -80,24 +80,24 @@ def draw():
 	X = 410; Y = 150; width = 5; height = 20
 	#head
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("images/earth.png").convert()
+	head = pygame.image.load("hangman/images/earth.png").convert()
 	screen.blit(head, (380, 165))
 	# Torso
 	X = 410; Y = 230; width = 4; height = 80
 	b1 = pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	#legs
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("images/rightleg.png").convert()
+	head = pygame.image.load("hangman/images/rightleg.png").convert()
 	screen.blit(head, (410, 310))
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("images/leftleg.png").convert()
+	head = pygame.image.load("hangman/images/leftleg.png").convert()
 	screen.blit(head, (350, 310))
 	#arms
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("images/rightarm.png").convert()
+	head = pygame.image.load("hangman/images/rightarm.png").convert()
 	screen.blit(head, (415, 250))
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("images/leftarm.png").convert()
+	head = pygame.image.load("hangman/images/leftarm.png").convert()
 	screen.blit(head, (345, 250))
 
 	
