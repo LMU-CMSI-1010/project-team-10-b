@@ -175,8 +175,5 @@ while run:
 
 
 pygame.init()
-
-
-
 pygame.quit()
 quit()
