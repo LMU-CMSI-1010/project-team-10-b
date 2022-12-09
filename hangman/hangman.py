@@ -7,7 +7,7 @@ import math
 # How fast our game loop runs
 clock = pygame.time.Clock()
 
-width, height = 1000, 600
+width, height = 1100, 600
 screen = pygame.display.set_mode((width, height))
 colorBackground = (0, 0, 0)
 
@@ -30,34 +30,85 @@ for i in range(26):
 
 # font
 pygame.font.init()
-LETTER_FONT = pygame.font.SysFont('arial', 30)
-WORD_FONT = pygame.font.SysFont('arial', 30)
+LETTER_FONT = pygame.font.SysFont('courier', 30)
+WORD_FONT = pygame.font.SysFont('courier', 40)
 
-#states = "Alabama Alaska Arizona Arkansas California Colorado Connecticut Delaware Florida Georgia Hawaii Idaho Illinois Indiana Iowa Kansas Kentucky Louisiana Maine Maryland Massachusetts Michigan Minnesota Mississippi Missouri Montana Nebraska Nevada NewHampshire NewJersey NewMexico NewYork NorthCarolina NorthDakota Ohio Oregon Oklahoma Pennsylvania RhodeIsland SouthCarolina SouthDakota Tennessee Texas Utah Vermont Virginia Washington WestVirginia Wisconsin Wyoming".split()
+wordList = ["ALABAMA", 
+		  "ALASKA",
+		  "ARIZONA",
+		  "ARKANSAS", 
+		  "CALIFORNIA",
+		  "COLORADO", 
+		  "CONNECTICUT", 
+		  "DELAWARE", 
+		  "FLORIDA", 
+		  "GEORGIA",
+		  "HAWAII", 
+		  "IDAHO", 
+		  "ILLINOIS", 
+		  "INDIANA", 
+		  "IOWA", 
+		  "KANSAS", 
+		  "KENTUCKY", 
+		  "LOUISIANA", 
+		  "MAINE", 
+		  "MARYLAND", 
+		  "MASSACHUSETTS", 
+		  "MICHIGAN", 
+		  "MINNESOTA", 
+		  "MISSISSIPPI", 
+		  "MISSOURI", 
+		  "MONTANA", 
+		  "NEBRASKA", 
+		  "NEVADA", 
+		  "NEW HAMPSHIRE", 
+		  "NEW JERSEY", 
+		  "NEW MEXICO", 
+		  "NEW YORK", 
+		  "NORTH CAROLINA", 
+		  "NORTH DAKOTA", 
+		  "OHIO", 
+		  "OREGON", 
+		  "OKLAHOMA", 
+		  "PENNSYLVANIA", 
+		  "RHODE ISLAND", 
+		  "SOUTH CAROLINA", 
+		  "SOUTH DAKOTA", 
+		  "TENNESSEE", 
+		  "TEXAS", 
+		  "UTAH", 
+		  "VERMONT", 
+		  "VIRGINIA", 
+		  "WASHINGTON", 
+		  "WEST VIRGINIA", 
+		  "WISCONSIN", 
+		  "WYOMING"]
 
-#class StateName():
     #randomly selects a state name
-    #def get_state(wordList):
-        #state_index = random.randint(0, len(wordList) - 1 )
-        #return wordList[state_index]
-#state_name = StateName()
-state = "CALIFORNIA "
+def get_state(wordList):
+    state_index = random.randint(0, len(wordList) - 1 )
+    return wordList[state_index]
+state = get_state(wordList)
+
 guessed = []
 # Game loop
 run = True
 
 def draw():
 	screen.fill((0, 0, 0))
+	indent = -170 
 	#draw statename
 	display_word = ""
 	for letter in state:
 		if letter in guessed:
 			display_word += letter + " "
+		elif letter == " ":
+			display_word += "  "
 		else:
 			display_word += "_ "
 
-	text = WORD_FONT.render(display_word, 1, (0, 0, 0))
-	screen.blit(text, (500, 200))
+	text = WORD_FONT.render(display_word, 1, (255, 255, 255))
+	screen.blit(text, (550 + indent, 340))
 	
 	#letters 
 	for letter in letters:
@@ -65,40 +116,40 @@ def draw():
 		if visible:
 			pygame.draw.circle(screen, (255, 255, 255), (x, y), radius, 3)
 			text = LETTER_FONT.render(ltr, 1, (255, 255, 255))
-			screen.blit(text, (x - text.get_width() / 2, y - text.get_width() / 2))
-
+			screen.blit(text, (x - text.get_width() / 2, y - text.get_width() / 2 - 5))
+	
 	# hang visual
-	X = 300; Y = 150; width = 5; height = 250
+	X = 300 + indent; Y = 150; width = 5; height = 250
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	
-	X = 250; Y = 400; width = 100; height = 5
+	X = 250 + indent; Y = 400; width = 100; height = 5
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 
-	X = 300; Y = 150; width = 110; height = 5
+	X = 300 + indent; Y = 150; width = 110; height = 5
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 
-	X = 410; Y = 150; width = 5; height = 20
+	X = 410 + indent; Y = 150; width = 5; height = 20
 	#head
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	head = pygame.image.load("hangman/images/earth.png").convert()
-	screen.blit(head, (380, 165))
+	screen.blit(head, (380 + indent, 165))
 	# Torso
-	X = 410; Y = 230; width = 4; height = 80
+	X = 410 + indent; Y = 230; width = 4; height = 80
 	b1 = pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	#legs
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	head = pygame.image.load("hangman/images/rightleg.png").convert()
-	screen.blit(head, (410, 310))
+	screen.blit(head, (410 + indent, 310))
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	head = pygame.image.load("hangman/images/leftleg.png").convert()
-	screen.blit(head, (350, 310))
+	screen.blit(head, (350 + indent, 310))
 	#arms
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	head = pygame.image.load("hangman/images/rightarm.png").convert()
-	screen.blit(head, (415, 250))
+	screen.blit(head, (415 + indent, 250))
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	head = pygame.image.load("hangman/images/leftarm.png").convert()
-	screen.blit(head, (345, 250))
+	screen.blit(head, (345 + indent, 250))
 
 	
 	pygame.display.update()
