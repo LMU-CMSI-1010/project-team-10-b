@@ -90,6 +90,8 @@ def get_state(wordList):
     return wordList[state_index]
 state = get_state(wordList)
 
+hangman_status = 0 
+
 guessed = []
 # Game loop
 run = True
@@ -135,21 +137,21 @@ def draw():
 	screen.blit(head, (380 + indent, 165))
 	# Torso
 	X = 410 + indent; Y = 230; width = 4; height = 80
-	b1 = pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
+	torso = pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	#legs
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("hangman/images/rightleg.png").convert()
-	screen.blit(head, (410 + indent, 310))
+	rightleg = pygame.image.load("hangman/images/rightleg.png").convert()
+	screen.blit(rightleg, (410 + indent, 310))
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("hangman/images/leftleg.png").convert()
-	screen.blit(head, (350 + indent, 310))
+	leftleg = pygame.image.load("hangman/images/leftleg.png").convert()
+	screen.blit(leftleg, (350 + indent, 310))
 	#arms
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("hangman/images/rightarm.png").convert()
-	screen.blit(head, (415 + indent, 250))
+	rightarm = pygame.image.load("hangman/images/rightarm.png").convert()
+	screen.blit(rightarm, (415 + indent, 250))
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("hangman/images/leftarm.png").convert()
-	screen.blit(head, (345 + indent, 250))
+	leftarm = pygame.image.load("hangman/images/leftarm.png").convert()
+	screen.blit(leftarm, (345 + indent, 250))
 
 	
 	pygame.display.update()
@@ -169,6 +171,7 @@ while run:
 					distance = math.sqrt((x - pos_x) ** 2 + (y - pos_y) ** 2)
 					if distance < radius:
 						letter[3] = False
+						guessed.append(ltr)
 
 	
 	clock.tick(30)
