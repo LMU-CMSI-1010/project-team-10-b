@@ -33,6 +33,7 @@ pygame.font.init()
 LETTER_FONT = pygame.font.SysFont('courier', 30)
 WORD_FONT = pygame.font.SysFont('courier', 40)
 
+# List of state names
 wordList = ["ALABAMA", 
 		  "ALASKA",
 		  "ARIZONA",
@@ -90,15 +91,21 @@ def get_state(wordList):
     return wordList[state_index]
 state = get_state(wordList)
 
-hangman_status = 0 
+body = []
+for i in range(6):
+	image = pygame.image.load("hangman/images/hangman" + str(i) + ".png")
+	body.append(image)
+xbody = [380, 380, 410, 350, 350, 410]
+ybody = [165, 225, 225, 225, 285, 285]
 
+hangman_status = -1
+indent = -170 
 guessed = []
 # Game loop
 run = True
 
 def draw():
 	screen.fill((0, 0, 0))
-	indent = -170 
 	#draw statename
 	display_word = ""
 	for letter in state:
@@ -130,36 +137,18 @@ def draw():
 	X = 300 + indent; Y = 150; width = 110; height = 5
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 
-	X = 410 + indent; Y = 150; width = 5; height = 20
-	#head
+	X = 410 + indent; Y = 150; width = 5; height = 15
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	head = pygame.image.load("hangman/images/earth.png").convert()
-	screen.blit(head, (380 + indent, 165))
-	# Torso
-	X = 410 + indent; Y = 230; width = 4; height = 80
-	torso = pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	#legs
-	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	rightleg = pygame.image.load("hangman/images/rightleg.png").convert()
-	screen.blit(rightleg, (410 + indent, 310))
-	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	leftleg = pygame.image.load("hangman/images/leftleg.png").convert()
-	screen.blit(leftleg, (350 + indent, 310))
-	#arms
-	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	rightarm = pygame.image.load("hangman/images/rightarm.png").convert()
-	screen.blit(rightarm, (415 + indent, 250))
-	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
-	leftarm = pygame.image.load("hangman/images/leftarm.png").convert()
-	screen.blit(leftarm, (345 + indent, 250))
-
 	
-	pygame.display.update()
+	for body_part in range(hangman_status + 1):
+		screen.blit(body[body_part], (xbody[body_part] + indent, ybody[body_part]))
 
 # this code lets us know what coordinate the user has pressed in the game screen
+# this code also makes the buttons disapear if you click on them
 while run:
 	clock.tick()
 	draw()
+	
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			run = False
@@ -171,8 +160,24 @@ while run:
 					distance = math.sqrt((x - pos_x) ** 2 + (y - pos_y) ** 2)
 					if distance < radius:
 						letter[3] = False
+						# this makes the letters guessed appear in the black word
 						guessed.append(ltr)
-
+						if ltr not in state:
+							hangman_status += 1 
+	won = True
+	for letter in state:
+		if letter not in guessed:
+			won = False 
+			break
+		if won: 
+			text = WORD_FONT.render("YOU WON!", 1, (255, 255, 255))
+			screen.blit(text, (550 + indent, 200))
+			break
+		if hangman_status == 5:
+			text = WORD_FONT.render("YOU LOST!", 1, (255, 255, 255))
+			screen.blit(text, (550 + indent, 200))
+			break
+	pygame.display.update()	
 	
 	clock.tick(30)
 
