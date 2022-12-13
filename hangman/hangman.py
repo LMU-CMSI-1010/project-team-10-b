@@ -40,7 +40,7 @@ WORD_FONT = pygame.font.SysFont('courier', 40)
 HINT_FONT = pygame.font.SysFont('courier', 20)
 
 # List of state names
-wordList = ["ALABAMA", 
+sateList = ["ALABAMA", 
 		  "ALASKA",
 		  "ARIZONA",
 		  "ARKANSAS", 
@@ -91,12 +91,13 @@ wordList = ["ALABAMA",
 		  "WISCONSIN", 
 		  "WYOMING"]
 
+# List of hints for state names
 hintList = ["Sweet home...",
 			"Has Polar Bears",
 			"Very Hot",
 			"Has the only active diamond mine in the US",
 			"The Golden State",
-			"ski",
+			"Weed",
 			"Lobster Roll",
 			"Doesn't Exist",
 			"Gators",
@@ -122,7 +123,7 @@ hintList = ["Sweet home...",
 			"Has the motto, Live free or Die", 
 			"Competitive with NY",
 			"Was Mexico",
-			"The big apple",
+			"Home of the best city in the world",
 			"Smokey Mountains",
 			"The worse Dakota",
 			"College Football",
@@ -142,14 +143,16 @@ hintList = ["Sweet home...",
 			"Cheese",
 			"Jackson Hole"]
 
-# randomly selects a state name
-def get_state():
-    state_index = random.randint(0, len(wordList) - 1 )
+# randomly selects a state name and hint
+def get_index():
+    state_index = random.randint(0, len(sateList) - 1 )
     return state_index
-state = wordList[get_state()]
-hint = hintList[get_state()]
+state_index = get_index()
+state = sateList[state_index]
+hint = hintList[state_index]
 show_hint = False
-# coordinates for hint icon
+
+# coordinates for hint button
 xhint = 1030
 yhint = 10
 
@@ -163,22 +166,22 @@ ybody = [165, 225, 225, 225, 285, 285]
 
 indent = -170 
 
-hangman_status = -1
-guessed = []
-
-# Game loop variables
-run = True
-end_game = False
-
-# quit and reset coordinates
+# quit and reset buttons coordinates
 xreset = 10
 yreset = 80
 xquit = 10
 yquit = 10
 
+# Other variables
+hangman_status = -1
+guessed = []
+run = True
+end_game = False
+
+# draws the main game screen
 def draw():
 	screen.fill((0, 0, 0))
-	# hint icon (lightbulb)
+	# hint button (lightbulb)
 	reset = pygame.image.load("hangman/images/idea.png")
 	screen.blit(reset, (xhint, yhint))
 	# quit and reset buttons
@@ -186,8 +189,8 @@ def draw():
 	screen.blit(reset, (xreset, yreset))
 	quit = pygame.image.load("hangman/images/quit.png")
 	screen.blit(quit, (xquit, yquit))
-	# this substitutes the state name for "_"
-	# this also makes the letters guessed appear in the black board
+	# this substitutes the state name letters for "_"
+	# this also makes the letters guessed appear on the black board
 	display_word = ""
 	for letter in state:
 		if letter in guessed:
@@ -196,11 +199,10 @@ def draw():
 			display_word += "  "
 		else:
 			display_word += "_ "
-
 	text = WORD_FONT.render(display_word, 1, (255, 255, 255))
 	screen.blit(text, (550 + indent, 340))
 	
-	# draw letters of the keyboard that have not been guessed
+	# draw letters of the keyboard that have not been guessed yet
 	for letter in letters:
 		x, y, ltr, visible = letter
 		if visible:
@@ -208,7 +210,7 @@ def draw():
 			text = LETTER_FONT.render(ltr, 1, (255, 255, 255))
 			screen.blit(text, (x - text.get_width() / 2, y - text.get_width() / 2 - 5))
 
-	# hang visual
+	# draw hangman
 	X = 300 + indent; Y = 150; width = 5; height = 250
 	pygame.draw.rect(screen, (252,252,252), (X, Y, width, height))
 	
@@ -223,10 +225,11 @@ def draw():
 	
 	for body_part in range(hangman_status + 1):
 		screen.blit(body[body_part], (xbody[body_part] + indent, ybody[body_part]))
-	# hint letter format and coordinates
+	
+	# draw hint
 	if show_hint:
-	   text = HINT_FONT.render(hint, 1, (255,215,0))
-	   screen.blit(text, (500, 40))
+		text = HINT_FONT.render(hint, 1, (255,215,0))
+		screen.blit(text, (500, 40))
 
 	pygame.display.update()	
 	return display_word
@@ -246,24 +249,29 @@ while run:
 		# this code lets us know what coordinate the user has pressed in the game screen
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			pos_x, pos_y = pygame.mouse.get_pos()
-			# check if reset or quit have been clicked
+			# check if reset has been clicked
 			distance = math.sqrt((xreset + 32 - pos_x) ** 2 + (yreset + 32 - pos_y) ** 2)
 			if distance < radius:
 				letters = keyboard()
-				state = wordList[get_state()]
-				hint = hintList[get_state()]
+				state_index = get_index()
+				state = sateList[state_index]
+				hint = hintList[state_index]
 				show_hint = False
 				hangman_status = -1
+				display_word = "_"
 				guessed = []
 				end_game = False
+			# check if quit has been clicked
 			distance = math.sqrt((xquit + 32 - pos_x) ** 2 + (yquit + 32 - pos_y) ** 2)
 			if distance < radius:
 				pygame.quit()
 				quit()
 			# check if hint button is pressed
-			distance = math.sqrt((xhint + 32 - pos_x) ** 2 + (yhint + 32 - pos_y) ** 2)
-			if distance < radius:
-			 	show_hint = True
+			if not show_hint:
+				distance = math.sqrt((xhint + 32 - pos_x) ** 2 + (yhint + 32 - pos_y) ** 2)
+				if distance < radius:
+					hangman_status += 1
+					show_hint = True
 			# check if keyboard is pressed
 			if not end_game:
 				for letter in letters:
@@ -287,5 +295,3 @@ while run:
 		end_game = True
 	
 	clock.tick(30)
-
-
