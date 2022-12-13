@@ -37,6 +37,7 @@ letters = keyboard()
 pygame.font.init()
 LETTER_FONT = pygame.font.SysFont('courier', 30)
 WORD_FONT = pygame.font.SysFont('courier', 40)
+HINT_FONT = pygame.font.SysFont('courier', 20)
 
 # List of state names
 wordList = ["ALABAMA", 
@@ -90,17 +91,67 @@ wordList = ["ALABAMA",
 		  "WISCONSIN", 
 		  "WYOMING"]
 
-hintList = []
+hintList = ["Sweet home...",
+			"Has Polar Bears",
+			"Very Hot",
+			"Has the only active diamond mine in the US",
+			"The Golden State",
+			"Weed",
+			"Lobster Roll",
+			"Doesn't Exist",
+			"Gators",
+			"Peaches",
+			"Volcanos",
+			"Potatoes",
+			"Chicago",
+			"Basketball",
+			"Corn",
+			"Tornados",
+			"KFC",
+			"French",
+			"Lobster",
+			"Birthplace of the national anthem",
+			"One of the original 13 colonies",
+			"Has a giant lake named after it",
+			"The land of 10,000 lakes",
+			"Hard to spell",
+			"Gateway arch",
+			"Grizzly Bears",
+			"Ranches",
+			"Gambling",
+			"Has the motto, Live free or Die", 
+			"Competitive with NY",
+			"Was Mexico",
+			"Home of the best city in the world",
+			"Smokey Mountains",
+			"The worse Dakota",
+			"College Football",
+			"Tornados", 
+			"Ducks",
+			"Amish",
+			"First colony",
+			"Sweet Tea",
+			"The better Dakota",
+			"Nashville",
+			"Cowboys",
+			"Mormons",
+			"Maple Syrup",
+			"Known as the birthplace of a nation",
+			"Rainy",
+			"Take me home... Country road...",
+			"Cheese",
+			"Jackson Hole"]
 
 # randomly selects a state name
 def get_state():
     state_index = random.randint(0, len(wordList) - 1 )
     return state_index
 state = wordList[get_state()]
-# hint = hintList[get_state()]
-# show_hint = False
-# xhint = 
-# yhint = 
+hint = hintList[get_state()]
+show_hint = False
+# coordinates for hint icon
+xhint = 1030
+yhint = 10
 
 # load body images
 body = []
@@ -120,13 +171,16 @@ run = True
 end_game = False
 
 # quit and reset coordinates
-xreset = 1030
-yreset = 10
+xreset = 10
+yreset = 80
 xquit = 10
 yquit = 10
 
 def draw():
 	screen.fill((0, 0, 0))
+	# hint icon (lightbulb)
+	reset = pygame.image.load("hangman/images/idea.png")
+	screen.blit(reset, (xhint, yhint))
 	# quit and reset buttons
 	reset = pygame.image.load("hangman/images/reset.png")
 	screen.blit(reset, (xreset, yreset))
@@ -169,10 +223,10 @@ def draw():
 	
 	for body_part in range(hangman_status + 1):
 		screen.blit(body[body_part], (xbody[body_part] + indent, ybody[body_part]))
-	
-	# if show_hint:
-	#   text = LETTER_FONT.render(hint, 1, (255, 255, 255))
-	#	screen.blit(text, (, ))
+	# hint letter format and coordinates
+	if show_hint:
+	   text = HINT_FONT.render(hint, 1, (255,215,0))
+	   screen.blit(text, (500, 40))
 
 	pygame.display.update()	
 	return display_word
@@ -197,8 +251,8 @@ while run:
 			if distance < radius:
 				letters = keyboard()
 				state = wordList[get_state()]
-				# hint = hintList[get_state()]
-				# show_hint = False
+				hint = hintList[get_state()]
+				show_hint = False
 				hangman_status = -1
 				guessed = []
 				end_game = False
@@ -207,9 +261,9 @@ while run:
 				pygame.quit()
 				quit()
 			# check if hint button is pressed
-			# distance = math.sqrt((xhint + 32 - pos_x) ** 2 + (yhint + 32 - pos_y) ** 2)
-			# if distance < radius:
-			# 	show_hint = True
+			distance = math.sqrt((xhint + 32 - pos_x) ** 2 + (yhint + 32 - pos_y) ** 2)
+			if distance < radius:
+			 	show_hint = True
 			# check if keyboard is pressed
 			if not end_game:
 				for letter in letters:
